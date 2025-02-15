@@ -1,101 +1,543 @@
+"use client";
+
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+  FaWhatsapp,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaProjectDiagram,
+  FaReact,
+  FaCode,
+  FaAndroid,
+  FaNodeJs,
+  FaDatabase,
+  FaApple,
+  FaExternalLinkAlt,
+  FaMobile,
+} from "react-icons/fa";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+
+import { motion } from "framer-motion";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [activeSection, setActiveSection] = useState("home");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+  const menuItems = [
+    { id: "home", label: "Início" },
+    { id: "about", label: "Sobre Mim" },
+    { id: "skills", label: "Tech Expertises" },
+    { id: "projects", label: "Projetos Desenvolvidos" },
+    { id: "contact", label: "Contato" },
+  ];
+
+  const projects = [
+    {
+      name: "Discode Software House",
+      description: "Site da empresa Discode Software House.",
+      stack: ["React", "Next.js"],
+      link: "https://www.discode.com.br",
+      image: "/logo.png",
+    },
+    {
+      name: "Virou Cupom",
+      description:
+        "Desenvolvi a plataforma de cupons de desconto e a Landing Page.",
+      stack: ["React", "Next.js", "Node.js", "PostgreSQL"],
+      link: "https://pegueseucupom.viroucupom.com.br/",
+      github: "",
+      image: "/virou-cupom.png",
+    },
+    {
+      name: "Shop Vidros E-commerce",
+      description: "E-commerce da Shop Vidros (em desenvolvimento).",
+      stack: ["React", "Next.js", "Node.js", "PostgreSQL"],
+      link: "https://www.shopvidros.com/",
+      github: "",
+      image: "/shop-vidros.png",
+    },
+    {
+      name: "Ideia Publicidade",
+      description: "Landing Oage da Ideia Publicidade.",
+      stack: ["React", "Next.js"],
+      link: "https://www.ideiapublicidades.com.br/",
+      github: "",
+      image: "/ideia.png",
+    },
+    {
+      name: "TV Itajubá",
+      description: "Site e Aplicativos da TV ITajubá.",
+      stack: [
+        "React",
+        "React Native",
+        "Node.js",
+        "PostgreSQL",
+        "Android",
+        "iOS",
+      ],
+      link: "https://tv-itajuba-web.vercel.app/",
+      github: "",
+      image: "/tv-itajuba.png",
+    },
+    {
+      name: "Dashr Recrutando",
+      description: "Site e Aplicativos de recrutamento e seleção.",
+      stack: [
+        "React",
+        "React Native",
+        "Node.js",
+        "PostgreSQL",
+        "Android",
+        "iOS",
+      ],
+      link: "https://dashr.app/home/pt",
+      github: "",
+      image: "/dashr.png",
+    },
+    {
+      name: "QUOTH",
+      description:
+        "Plataforma Web para emissão e gestão de orçamentos (Projeto autoral).",
+      stack: ["React", "Next.js", "Node.js", "PostgreSQL"],
+      link: "https://quoth-ejmij1gx5-marden-melos-projects.vercel.app/",
+      github: "https://github.com/marden-melo/quoth",
+      image: "/quoth.png",
+    },
+  ];
+
+  const techIcons = [
+    { name: "React", icon: <FaReact size={24} className="text-blue-400" /> },
+    {
+      name: "Node.js",
+      icon: <FaNodeJs size={24} className="text-green-400" />,
+    },
+    {
+      name: "PostgreSQL",
+      icon: <FaDatabase size={24} className="text-blue-500" />,
+    },
+    {
+      name: "React Native",
+      icon: <FaMobile size={24} className="text-blue-300" />,
+    },
+    {
+      name: "MongoDB",
+      icon: <FaDatabase size={24} className="text-green-500" />,
+    },
+    {
+      name: "iOS",
+      icon: <FaApple size={24} className="text-white" />,
+    },
+    {
+      name: "Android",
+      icon: <FaAndroid size={24} className="text-green-500" />,
+    },
+    { name: "Next.js", icon: <FaCode size={24} className="text-green-400" /> },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = menuItems.map((item) =>
+        document.getElementById(item.id)
+      );
+      const scrollPosition = window.scrollY;
+
+      for (const section of sections) {
+        if (section && section.offsetTop <= scrollPosition + 200) {
+          setActiveSection(section.id);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const changeSection = (section: string) => {
+    const sectionElement = document.getElementById(section);
+    if (sectionElement) {
+      sectionElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div className="relative min-h-screen bg-[#0D1117] text-white">
+      <aside className="w-[250px] fixed left-0 top-0 h-full bg-[#111418] bg-opacity-90 backdrop-blur-lg p-6 flex flex-col items-center gap-6 shadow-lg">
+        <Image
+          src="/foto-perfil.png"
+          alt="Foto de perfil"
+          width={160}
+          height={160}
+          className="rounded-full border-4 border-[#1F2937] mt-10"
+        />
+        <nav className="flex flex-col gap-4 text-center mt-2">
+          {menuItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => changeSection(item.id)}
+              className={`hover:text-gray-400 transition-colors duration-300 ${
+                activeSection === item.id ? "text-green-400" : ""
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </nav>
+        <a
+          href="https://wa.me/5535999039120"
+          target="_blank"
+          className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-600 transition-all"
+        >
+          <FaWhatsapp size={20} /> Fale Comigo
+        </a>
+
+        <div className="flex gap-4 mt-auto">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://github.com/marden-melo"
             target="_blank"
-            rel="noopener noreferrer"
+            className="hover:text-gray-400"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            <FaGithub size={24} />
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://www.linkedin.com/in/marden-melo/"
             target="_blank"
-            rel="noopener noreferrer"
+            className="hover:text-gray-400"
           >
-            Read our docs
+            <FaLinkedin size={24} />
+          </a>
+          <a
+            href="https://www.instagram.com/mardenmelo.dev/"
+            target="_blank"
+            className="hover:text-gray-400"
+          >
+            <FaInstagram size={24} />
           </a>
         </div>
+      </aside>
+
+      <main className="ml-[250px] relative overflow-hidden">
+        <section
+          id="home"
+          className="relative min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center "
+          style={{
+            backgroundImage: "url('/rocket-image.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            className="z-20 max-w-4xl"
+          >
+            <h1 className="text-6xl font-extrabold mb-6 text-white drop-shadow-2xl">
+              Desbravando o Infinito
+            </h1>
+            <p className="text-[1.2rem] text-gray-300 leading-relaxed mb-[20rem]">
+              Assim como um foguete rompe a atmosfera para explorar o
+              desconhecido, a tecnologia nos impulsiona a criar o impossível.
+              Cada linha de código é um motor de propulsão para um novo universo
+              de possibilidades.
+            </p>
+          </motion.div>
+
+          {/* Efeito de bordas suaves com gradiente */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent rounded-lg shadow-lg"></div>
+        </section>
+
+        <section
+          id="about"
+          className="relative min-h-screen flex flex-col justify-center items-center p-10 transition-all duration-1000"
+          style={{
+            backgroundImage: "url('/background-jornada.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="relative max-w-7xl mx-auto text-center justify-center mb-8">
+            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
+              Sobre mim
+            </h3>
+          </div>
+
+          <div className="flex flex-col md:flex-row w-full max-w-7xl space-y-8 md:space-y-0 justify-between mt-10">
+            <div className="md:w-1/2 space-y-4 px-6 md:px-12">
+              <p className="text-[1.1rem] text-gray-300 text-justify">
+                Sou Marden Melo, desenvolvedor fullstack com mais de 5 anos de
+                experiência, criando soluções inovadoras para empresas de
+                diversos segmentos.
+              </p>
+              <p className="text-[1.1rem] text-gray-300 text-justify">
+                Minha jornada começou com um desafio pessoal e se transformou em
+                um compromisso com a aprendizagem contínua, buscando sempre
+                impactar positivamente os negócios e a vida das pessoas.
+              </p>
+              <p className="text-[1.1rem] text-gray-300 text-justify">
+                Hoje, sigo explorando novas possibilidades, adquirindo novas
+                habilidades, criando soluções para clientes e projetos
+                inovadores.
+              </p>
+            </div>
+
+            <div className="md:w-1/2 grid grid-cols-2 gap-8 mt-10 md:mt-0 text-center">
+              {[
+                {
+                  icon: <FaEnvelope size={40} className="text-white" />,
+                  title: "E-mail",
+                  text: "marden@example.com",
+                },
+                {
+                  icon: <FaMapMarkerAlt size={40} className="text-white" />,
+                  title: "Localização",
+                  text: "Sorocaba, SP",
+                },
+                {
+                  icon: <FaProjectDiagram size={40} className="text-white" />,
+                  title: "Projetos Realizados",
+                  text: "Projetos Web | Aplicativos Android/iOS | APIs Node.",
+                },
+                {
+                  icon: <FaWhatsapp size={40} className="text-white" />,
+                  title: "Contato via WhatsApp",
+                  text: "Entre em contato pelo WhatsApp.",
+                },
+              ].map((card, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col items-center justify-center gap-4 bg-black bg-opacity-50 p-6 rounded-lg shadow-lg backdrop-blur-md hover:shadow-xl hover:border-green-500 transition-all z-50"
+                >
+                  {card.icon}
+                  <div>
+                    <h3 className="text-xl font-semibold text-white drop-shadow-lg">
+                      {card.title}
+                    </h3>
+                    <p className="text-md text-gray-300 mt-2">{card.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="skills"
+          className="relative min-h-screen flex flex-col justify-center items-center p-10 transition-all duration-1000 mt-12"
+          style={{
+            backgroundImage: "url('/background-tech.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="relative max-w-7xl mx-auto text-center justify-center mb-8">
+            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
+              Tech Expertises
+            </h3>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-10 mt-12">
+            {[
+              {
+                icon: <FaReact size={40} className="text-white" />,
+                title: "React",
+                text: "Construção de interfaces ricas para a web com React.",
+              },
+              {
+                icon: <FaCode size={40} className="text-white" />,
+                title: "Next.js",
+                text: "Desenvolvimento de aplicações escaláveis e rápidas com Next.js.",
+              },
+              {
+                icon: (
+                  <div className="flex items-center space-x-4">
+                    <FaAndroid size={40} className="text-white" />
+                    <FaApple size={40} className="text-white" />
+                  </div>
+                ),
+                title: "React Native",
+                text: "Aplicativos móveis para Android e iOS com React Native.",
+              },
+              {
+                icon: <FaNodeJs size={40} className="text-white" />,
+                title: "Node.js",
+                text: "Criação de APIs rápidas e escaláveis com Node.js.",
+              },
+              {
+                icon: <FaDatabase size={40} className="text-white" />,
+                title: "SQL & NoSQL",
+                text: "Experiência com bancos de dados relacionais e não relacionais (PostgreSQL, MongoDB, etc).",
+              },
+            ].map((card, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-center gap-6 bg-black bg-opacity-40 backdrop-blur-md p-8 rounded-xl shadow-lg hover:shadow-2xl hover:border-green-500 transition-all duration-300 ease-in-out w-72"
+              >
+                {card.icon}
+                <div>
+                  <h3 className="text-xl font-semibold text-white drop-shadow-lg">
+                    {card.title}
+                  </h3>
+                  <p className="text-md text-gray-300 mt-2">{card.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="projects"
+          className="relative min-h-screen flex flex-col justify-center items-center p-10 transition-all duration-1000 mt-11"
+          style={{
+            backgroundImage: "url('/background-tech.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="relative max-w-7xl mx-auto text-center justify-center mb-8">
+            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
+              Projetos Desenvolvidos
+            </h3>
+          </div>
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-gray-300 mb-12 mt-6">
+              Alguns dos projetos que desenvolvi - Web, Mobile e APIs.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {projects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+                className="relative bg-[#1A1E23] p-6 rounded-xl shadow-lg backdrop-blur-md border border-gray-700 hover:border-green-500 transition-all flex flex-col justify-between min-h-[450px]"
+              >
+                <Image
+                  src={project.image}
+                  alt={project.name}
+                  width={400}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                />
+                <div>
+                  <h3 className="text-2xl font-semibold text-white">
+                    {project.name}
+                  </h3>
+                  <p className="text-gray-300 mt-2 line-clamp-3">
+                    {project.description}
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-4 mt-4 flex-wrap min-h-[50px]">
+                    {techIcons.map(
+                      (tech) =>
+                        project.stack.includes(tech.name) && (
+                          <div
+                            key={tech.name}
+                            className="flex flex-col items-center text-center"
+                          >
+                            {tech.icon}
+                            <span className="text-xs text-gray-300 mt-1">
+                              {tech.name}
+                            </span>
+                          </div>
+                        )
+                    )}
+                  </div>
+                  <div className="flex gap-4 mt-4">
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-400 flex items-center gap-2 hover:underline"
+                      >
+                        <FaExternalLinkAlt /> Acessar
+                      </a>
+                    )}
+                    {project.github && (
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 flex items-center gap-2 hover:underline"
+                      >
+                        <FaGithub /> GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+        <section
+          id="contact"
+          className="py-44 0 px-4 text-center bg-gray-900 text-white"
+        >
+          <motion.h2
+            className="text-5xl font-bold mb-6 mt-20"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Contato
+          </motion.h2>
+          <motion.p
+            className="text-lg mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            Estou disponível para novas oportunidades e projetos. Entre em
+            contato comigo pelas redes sociais ou envie uma mensagem
+            diretamente!
+          </motion.p>
+
+          <div className="flex justify-center gap-6 mb-8 text-3xl">
+            <a
+              href="https://github.com/marden-melo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mardenmelo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="https://instagram.com/mardenmelo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400 transition"
+            >
+              <FaInstagram />
+            </a>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-6">
+            <a
+              href="https://wa.me/5535999039120"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-opacity-20 bg-white border border-white/30 backdrop-blur-md px-6 py-4 rounded-xl text-lg font-semibold flex items-center gap-3 transition hover:bg-opacity-30 shadow-lg"
+            >
+              <FaWhatsapp className="text-green-400" /> WhatsApp
+            </a>
+            <a className="bg-opacity-20 bg-white border border-white/30 backdrop-blur-md px-6 py-4 rounded-xl text-lg font-semibold flex items-center gap-3 transition hover:bg-opacity-30 shadow-lg">
+              <FaEnvelope className="text-blue-400" /> mardenmelo@gmail.com
+            </a>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
