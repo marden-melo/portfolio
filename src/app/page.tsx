@@ -320,7 +320,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
+          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
             <FaArrowDown size={30} className="text-white" />
           </div>
 
