@@ -320,7 +320,7 @@ export default function Home() {
             </div>
           </motion.div>
 
-          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
+          <div className="absolute bottom-28 sm:bottom-24 md:bottom-16 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
             <FaArrowDown size={30} className="text-white" />
           </div>
 
@@ -378,8 +378,8 @@ export default function Home() {
                 },
                 {
                   icon: <FaWhatsapp size={40} className="text-white" />,
-                  title: "Contato via WhatsApp",
-                  text: "Entre em contato pelo WhatsApp.",
+                  title: "Contato via WhatsApp/Chamada",
+                  text: "(35) 99903-9120",
                 },
               ].map((card, index) => (
                 <div
