@@ -9,8 +9,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "SMARTMentoring",
-  description: "Smart Mentoring",
+  title: "Marden Melo",
+  description: "Portfólio",
 };
 
 export default function RootLayout({

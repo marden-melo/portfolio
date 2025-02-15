@@ -16,14 +16,17 @@ import {
   FaApple,
   FaExternalLinkAlt,
   FaMobile,
+  FaBars,
+  FaTimes,
+  FaArrowDown,
 } from "react-icons/fa";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-
 import { motion } from "framer-motion";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
     { id: "home", label: "Início" },
@@ -60,7 +63,7 @@ export default function Home() {
     },
     {
       name: "Ideia Publicidade",
-      description: "Landing Oage da Ideia Publicidade.",
+      description: "Landing Page da Ideia Publicidade.",
       stack: ["React", "Next.js"],
       link: "https://www.ideiapublicidades.com.br/",
       github: "",
@@ -125,10 +128,7 @@ export default function Home() {
       name: "MongoDB",
       icon: <FaDatabase size={24} className="text-green-500" />,
     },
-    {
-      name: "iOS",
-      icon: <FaApple size={24} className="text-white" />,
-    },
+    { name: "iOS", icon: <FaApple size={24} className="text-white" /> },
     {
       name: "Android",
       icon: <FaAndroid size={24} className="text-green-500" />,
@@ -158,12 +158,14 @@ export default function Home() {
     const sectionElement = document.getElementById(section);
     if (sectionElement) {
       sectionElement.scrollIntoView({ behavior: "smooth" });
+      setMobileMenuOpen(false);
     }
   };
 
   return (
     <div className="relative min-h-screen bg-[#0D1117] text-white">
-      <aside className="w-[250px] fixed left-0 top-0 h-full bg-[#111418] bg-opacity-90 backdrop-blur-lg p-6 flex flex-col items-center gap-6 shadow-lg">
+      {/* Sidebar para telas maiores */}
+      <aside className="hidden md:flex w-[250px] fixed left-0 top-0 h-full bg-[#111418] bg-opacity-90 backdrop-blur-lg p-6 flex-col items-center gap-6 shadow-lg">
         <Image
           src="/foto-perfil.png"
           alt="Foto de perfil"
@@ -187,15 +189,16 @@ export default function Home() {
         <a
           href="https://wa.me/5535999039120"
           target="_blank"
+          rel="noopener noreferrer"
           className="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-600 transition-all"
         >
           <FaWhatsapp size={20} /> Fale Comigo
         </a>
-
         <div className="flex gap-4 mt-auto">
           <a
             href="https://github.com/marden-melo"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
             <FaGithub size={24} />
@@ -203,6 +206,7 @@ export default function Home() {
           <a
             href="https://www.linkedin.com/in/marden-melo/"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
             <FaLinkedin size={24} />
@@ -210,6 +214,7 @@ export default function Home() {
           <a
             href="https://www.instagram.com/mardenmelo.dev/"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-gray-400"
           >
             <FaInstagram size={24} />
@@ -217,10 +222,79 @@ export default function Home() {
         </div>
       </aside>
 
-      <main className="ml-[250px] relative overflow-hidden">
+      {/* Header mobile */}
+      <header className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-[#111418] p-4 shadow-md">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/foto-perfil.png"
+            alt="Foto de perfil"
+            width={40}
+            height={40}
+            className="rounded-full border-2 border-[#1F2937]"
+          />
+          <span className="text-lg font-semibold">Marden Melo</span>
+        </div>
+        <button onClick={() => setMobileMenuOpen(true)}>
+          <FaBars size={24} />
+        </button>
+      </header>
+
+      {/* Menu mobile overlay */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-[#111418] bg-opacity-95 z-50 flex flex-col p-8">
+          <div className="flex items-center justify-between mb-8">
+            <span className="text-2xl font-bold">Menu</span>
+            <button onClick={() => setMobileMenuOpen(false)}>
+              <FaTimes size={28} />
+            </button>
+          </div>
+          <nav className="flex flex-col gap-6">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => changeSection(item.id)}
+                className={`text-xl text-left hover:text-gray-400 transition-colors duration-300 ${
+                  activeSection === item.id ? "text-green-400" : ""
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="flex gap-6 mt-auto justify-center">
+            <a
+              href="https://github.com/marden-melo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400"
+            >
+              <FaGithub size={28} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/marden-melo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400"
+            >
+              <FaLinkedin size={28} />
+            </a>
+            <a
+              href="https://www.instagram.com/mardenmelo.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-400"
+            >
+              <FaInstagram size={28} />
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Main content ajustado para mobile (ml-0) e desktop (ml-[250px]) */}
+      <main className="ml-0 md:ml-[250px] relative overflow-hidden">
         <section
           id="home"
-          className="relative min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center "
+          className="relative min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center px-4 max-w-full"
           style={{
             backgroundImage: "url('/rocket-image.png')",
             backgroundSize: "cover",
@@ -231,26 +305,31 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="z-20 max-w-4xl"
+            className="z-20 max-w-4xl mx-auto"
           >
-            <h1 className="text-6xl font-extrabold mb-6 text-white drop-shadow-2xl">
-              Desbravando o Infinito
-            </h1>
-            <p className="text-[1.2rem] text-gray-300 leading-relaxed mb-[20rem]">
-              Assim como um foguete rompe a atmosfera para explorar o
-              desconhecido, a tecnologia nos impulsiona a criar o impossível.
-              Cada linha de código é um motor de propulsão para um novo universo
-              de possibilidades.
-            </p>
+            <div className="px-4 text-center">
+              <h1 className="text-4xl sm:text-6xl font-extrabold text-white drop-shadow-2xl mb-20 sm:mb-0">
+                Desbravando o Infinito
+              </h1>
+              <p className="mt-6 text-[1.3rem] sm:text-[1.2rem] text-gray-300 leading-relaxed mb-12 sm:mb-[20rem]">
+                Assim como um foguete rompe a atmosfera para explorar o
+                desconhecido, a tecnologia nos impulsiona a criar o impossível.
+                Cada linha de código é um motor de propulsão para um novo
+                universo de possibilidades.
+              </p>
+            </div>
           </motion.div>
 
-          {/* Efeito de bordas suaves com gradiente */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent rounded-lg shadow-lg"></div>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 animate-bounce">
+            <FaArrowDown size={30} className="text-white" />
+          </div>
+
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0D1117] via-transparent to-transparent rounded-lg shadow-lg"></div>
         </section>
 
         <section
           id="about"
-          className="relative min-h-screen flex flex-col justify-center items-center p-10 transition-all duration-1000"
+          className="relative min-h-screen flex flex-col justify-center items-center p-10 transition-all duration-1000 px-4 max-w-full"
           style={{
             backgroundImage: "url('/background-jornada.jpg')",
             backgroundSize: "cover",
@@ -262,7 +341,6 @@ export default function Home() {
               Sobre mim
             </h3>
           </div>
-
           <div className="flex flex-col md:flex-row w-full max-w-7xl space-y-8 md:space-y-0 justify-between mt-10">
             <div className="md:w-1/2 space-y-4 px-6 md:px-12">
               <p className="text-[1.1rem] text-gray-300 text-justify">
@@ -281,8 +359,7 @@ export default function Home() {
                 inovadores.
               </p>
             </div>
-
-            <div className="md:w-1/2 grid grid-cols-2 gap-8 mt-10 md:mt-0 text-center">
+            <div className="w-full sm:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-8 mt-10 md:mt-0 text-center">
               {[
                 {
                   icon: <FaEnvelope size={40} className="text-white" />,
@@ -314,7 +391,9 @@ export default function Home() {
                     <h3 className="text-xl font-semibold text-white drop-shadow-lg">
                       {card.title}
                     </h3>
-                    <p className="text-md text-gray-300 mt-2">{card.text}</p>
+                    <p className="text-md text-gray-300 mt-2 break-words">
+                      {card.text}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -332,11 +411,10 @@ export default function Home() {
           }}
         >
           <div className="relative max-w-7xl mx-auto text-center justify-center mb-8">
-            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
+            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-5xl md:text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
               Tech Expertises
             </h3>
           </div>
-
           <div className="flex flex-wrap justify-center gap-10 mt-12">
             {[
               {
@@ -396,7 +474,7 @@ export default function Home() {
           }}
         >
           <div className="relative max-w-7xl mx-auto text-center justify-center mb-8">
-            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
+            <h3 className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl sm:text-5xl md:text-6xl font-bold text-white opacity-40 whitespace-nowrap z-0">
               Projetos Desenvolvidos
             </h3>
           </div>
@@ -473,9 +551,10 @@ export default function Home() {
             ))}
           </div>
         </section>
+
         <section
           id="contact"
-          className="py-44 0 px-4 text-center bg-gray-900 text-white"
+          className="py-44 px-4 text-center bg-gray-900 text-white"
         >
           <motion.h2
             className="text-5xl font-bold mb-6 mt-20"
