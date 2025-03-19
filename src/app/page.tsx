@@ -364,7 +364,7 @@ export default function Home() {
                 {
                   icon: <FaEnvelope size={40} className="text-white" />,
                   title: "E-mail",
-                  text: "marden@example.com",
+                  text: "mardenmelo@gmail.com",
                 },
                 {
                   icon: <FaMapMarkerAlt size={40} className="text-white" />,
