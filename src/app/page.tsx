@@ -54,12 +54,13 @@ export default function Home() {
       image: "/virou-cupom.png",
     },
     {
-      name: "Shop Vidros E-commerce",
-      description: "E-commerce da Shop Vidros (em desenvolvimento).",
+      name: "E-commerce completo",
+      description:
+        "E-commerce completo para clientes que querem vender online.",
       stack: ["React", "Next.js", "Node.js", "PostgreSQL"],
-      link: "https://www.shopvidros.com/",
+      link: "https://seuecommerce.discode.com.br/",
       github: "",
-      image: "/shop-vidros.png",
+      image: "/ecommerce.png",
     },
     {
       name: "Ideia Publicidade",
